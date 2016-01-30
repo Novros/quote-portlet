@@ -1,4 +1,4 @@
-package cz.novros.lif.quotes.portlet.entity;
+package cz.novros.lif.quotes.backend.entity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -9,6 +9,9 @@ import java.util.Calendar;
  * @author Rostislav Novak
  */
 public class Quote {
+	
+	/** Id for database. */
+	private int ID;
 	
 	/** Text of quote. */
 	private String text;
@@ -34,6 +37,14 @@ public class Quote {
 		final Calendar cal = Calendar.getInstance();
         final SimpleDateFormat sdf = new SimpleDateFormat("d.M.Y");
         created = sdf.format(cal.getTime());
+	}
+
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
 	}
 
 	/**
