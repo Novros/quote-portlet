@@ -47,11 +47,11 @@
 	</build>
 
 	<dependencies>
-		<!-- <dependency>
-			<groupId>cz.novros.lif</groupId>
+		<dependency>
+			<groupId>cz.novros.lif.backend</groupId>
 			<artifactId>QuotesBackend</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-		</dependency> -->
+		</dependency>
 
         <!-- Liferay dependencies -->
         <dependency>

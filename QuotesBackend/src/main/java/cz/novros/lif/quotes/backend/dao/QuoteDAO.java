@@ -7,8 +7,11 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.springframework.stereotype.Repository;
+
 import cz.novros.lif.quotes.backend.entity.Quote;
 
+@Repository
 public class QuoteDAO {
 
 	 @PersistenceContext

@@ -9,7 +9,6 @@ import static cz.novros.lif.quotes.portlet.random.RandomQuotesConstants.SAVE_ACT
 import javax.portlet.RenderRequest;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,17 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
 
-import cz.novros.lif.quotes.portlet.IQuoteGenerator;
-import cz.novros.lif.quotes.portlet.entity.Quote;
+import cz.novros.lif.quotes.backend.entity.Quote;
+import cz.novros.lif.quotes.portlet.generator.IQuoteGenerator;
 import cz.novros.lif.quotes.portlet.rest.QuoteRestClient;
 
 @Controller
 @RequestMapping("VIEW")
 public class RandomQuotesPortletViewController {
 	protected final Logger LOG = Logger.getLogger(RandomQuotesPortletViewController.class);
-	
-	@Autowired
-	private QuoteValidator quoteValidator;
 	
 	private IQuoteGenerator generator = new QuoteRestClient();
 
@@ -38,7 +34,7 @@ public class RandomQuotesPortletViewController {
         
         final Quote quote = generator.randomQuote();
         if(quote == null) {
-        	model.addAttribute("danger", "GeneratorError");
+        	model.addAttribute("GeneratorError", "GeneratorError");
         } else {
         	String userId = request.getRemoteUser();
             quote.setAuthorOfEntity(userId);
@@ -65,11 +61,14 @@ public class RandomQuotesPortletViewController {
     }
     
     @ActionMapping(SAVE_ACTION)
-	public void saveEmployeeAction(@ModelAttribute(FORM_MODEL) Quote quote, BindingResult result, Model model) {
+	public void saveQuoteAction(@ModelAttribute(FORM_MODEL) Quote quote, BindingResult result, Model model) {
     	LOG.info("Saving quote with text:" + quote.getText() + " and author:" + quote.getAuthor() + ".");
-    	/* quoteValidator.validate(quote,result);
+    	
+    	/*quoteValidator.validate(quote,result);
 		if (!result.hasErrors()) {
+			QuoteService quoteService = ServiceProvider.getQuoteService();
+			quoteService.create(quote);
 			model.addAttribute("successMessage", "Quote was saved!");
-		} */
+		}*/
 	}
 }

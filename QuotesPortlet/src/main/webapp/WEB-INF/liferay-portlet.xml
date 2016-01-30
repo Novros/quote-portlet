@@ -4,7 +4,14 @@
 <liferay-portlet-app>
     <portlet>
         <portlet-name>RandomQuotePortlet</portlet-name>
-        <instanceable>false</instanceable>
+        <instanceable>true</instanceable>
+        <requires-namespaced-parameters>false</requires-namespaced-parameters>
+        <header-portlet-css>/css/main.css</header-portlet-css>
+        <header-portlet-javascript>/js/main.js</header-portlet-javascript>
+    </portlet>
+    <portlet>
+        <portlet-name>ManagerQuotePortlet</portlet-name>
+        <instanceable>true</instanceable>
         <requires-namespaced-parameters>false</requires-namespaced-parameters>
         <header-portlet-css>/css/main.css</header-portlet-css>
         <header-portlet-javascript>/js/main.js</header-portlet-javascript>

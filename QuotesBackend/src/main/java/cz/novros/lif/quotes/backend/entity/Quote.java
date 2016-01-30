@@ -3,14 +3,23 @@ package cz.novros.lif.quotes.backend.entity;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+
 /**
  * Simple entity class to represents quote.
  * 
  * @author Rostislav Novak
  */
+@Entity
 public class Quote {
 	
 	/** Id for database. */
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int ID;
 	
 	/** Text of quote. */

@@ -1,8 +1,7 @@
-package cz.novros.lif.quotes.portlet;
+package cz.novros.lif.quotes.portlet.generator;
 
-import cz.novros.lif.quotes.portlet.entity.Quote;
+import cz.novros.lif.quotes.backend.entity.Quote;
 
 public interface IQuoteGenerator {
 	Quote randomQuote();
-	Quote randomQuote(final String category);
 }

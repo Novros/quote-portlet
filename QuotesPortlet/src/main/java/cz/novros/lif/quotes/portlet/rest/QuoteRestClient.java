@@ -7,8 +7,8 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-import cz.novros.lif.quotes.portlet.IQuoteGenerator;
-import cz.novros.lif.quotes.portlet.entity.Quote;
+import cz.novros.lif.quotes.backend.entity.Quote;
+import cz.novros.lif.quotes.portlet.generator.IQuoteGenerator;
 
 public class QuoteRestClient implements IQuoteGenerator {
 
@@ -25,12 +25,15 @@ public class QuoteRestClient implements IQuoteGenerator {
 		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 
 		if (response.getStatus() != 200) {
-		   throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
+			System.err.println("Failed : HTTP error code : " + response.getStatus());
+			throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
 		}
 		
 		String quoteString = response.getEntity(String.class);
-		System.out.println(quoteString);
 		
+		/** 
+		 * TODO Rewrite: Use rest entity to parse json. (Jackson)
+		 */
 		Matcher authorMatcher = authorPattern.matcher(quoteString);
 		Matcher textMatcher = textPattern.matcher(quoteString);
 		
@@ -44,12 +47,4 @@ public class QuoteRestClient implements IQuoteGenerator {
 		
 		return quote;
 	}
-
-	@Override
-	public Quote randomQuote(String category) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
 }
