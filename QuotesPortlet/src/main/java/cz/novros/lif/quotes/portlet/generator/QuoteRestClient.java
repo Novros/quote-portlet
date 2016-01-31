@@ -1,5 +1,6 @@
-package cz.novros.lif.quotes.portlet.rest;
+package cz.novros.lif.quotes.portlet.generator;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -8,7 +9,6 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import cz.novros.lif.quotes.backend.entity.Quote;
-import cz.novros.lif.quotes.portlet.generator.IQuoteGenerator;
 
 public class QuoteRestClient implements IQuoteGenerator {
 

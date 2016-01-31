@@ -5,7 +5,7 @@
     <portlet>
         <portlet-name>RandomQuotePortlet</portlet-name>
         <configuration-action-class>cz.novros.lif.quotes.portlet.random.RandomQuotesPortletConfiguration</configuration-action-class>
-        <instanceable>true</instanceable>
+        <instanceable>false</instanceable>
         <requires-namespaced-parameters>false</requires-namespaced-parameters>
         <header-portlet-css>/css/main.css</header-portlet-css>
         <header-portlet-javascript>/js/main.js</header-portlet-javascript>

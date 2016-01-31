@@ -65,7 +65,7 @@ public class QuotesManagerPortletViewController {
 	}
 	
 	@ActionMapping(ADD_ACTION)
-	public void addQuoteAction(@ModelAttribute(FORM_MODEL) Quote quote, BindingResult result, Model model) {
+	public void addQuoteAction(@ModelAttribute(FORM_MODEL) Quote quote, BindingResult result, Model model, ActionResponse response) {
 		quoteValidator.validate(quote, result);
 		if (!result.hasErrors()) {
 			QuoteService quoteService = ServiceProvider.getQuoteService();
