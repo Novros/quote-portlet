@@ -4,6 +4,7 @@
 <liferay-portlet-app>
     <portlet>
         <portlet-name>RandomQuotePortlet</portlet-name>
+        <configuration-action-class>cz.novros.lif.quotes.portlet.random.RandomQuotesPortletConfiguration</configuration-action-class>
         <instanceable>true</instanceable>
         <requires-namespaced-parameters>false</requires-namespaced-parameters>
         <header-portlet-css>/css/main.css</header-portlet-css>

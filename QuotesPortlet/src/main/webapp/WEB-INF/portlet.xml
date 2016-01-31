@@ -8,7 +8,12 @@
 
 	<portlet>
         <portlet-name>RandomQuotePortlet</portlet-name>
+        <display-name>Random Quote</display-name>
         <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+        	<name>config-template</name>
+        	<value>/WEB-INF/jsp/random_quote/configuration.jsp</value>
+        </init-param>
         <init-param>
             <name>contextConfigLocation</name>
             <value>/WEB-INF/spring-context/portlet/random-quote-portlet.xml</value>
@@ -28,6 +33,7 @@
     
    <portlet>
         <portlet-name>ManagerQuotePortlet</portlet-name>
+        <display-name>Quote Manager</display-name>
         <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
         <init-param>
             <name>contextConfigLocation</name>
