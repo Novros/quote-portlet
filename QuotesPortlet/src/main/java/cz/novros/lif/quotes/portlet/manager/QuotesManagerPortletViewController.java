@@ -5,7 +5,6 @@ import static cz.novros.lif.quotes.portlet.manager.QuotesManagerConstants.*;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
 import javax.portlet.RenderRequest;
 
@@ -24,23 +23,37 @@ import cz.novros.lif.quotes.backend.ServiceProvider;
 import cz.novros.lif.quotes.backend.entity.Quote;
 import cz.novros.lif.quotes.backend.service.QuoteService;
 
+/**
+ * Controller for manager portlet.
+ * 
+ * @author Rostislav Novak
+ */
 @Controller
 @RequestMapping("VIEW")
 public class QuotesManagerPortletViewController {
+	/** Logger */
 	protected final Logger LOG = Logger.getLogger(QuotesManagerPortletViewController.class);
 	
+	/** Validator for quotes. */
 	@Autowired
 	private QuoteValidator quoteValidator;
 	
+	/**
+	 * Default rendering of this portlet.
+	 * 
+	 * @param request Request for getting logged user.
+	 * @param model Model for jsp view.
+	 * @return Path of jsp which will be showed.
+	 */
 	@RenderMapping
-    public String renderDefault(RenderRequest request, Model model) {
+    public final String renderDefault(final RenderRequest request, final Model model) {
         LOG.debug("Rendering default view.");
 
-		Quote quote = new Quote();
-		String userId = request.getRemoteUser();
+		final Quote quote = new Quote();
+		final String userId = request.getRemoteUser();
         quote.setAuthorOfEntity(userId);
         
-        List<Quote> quotes = getQuoteService().readAll();
+        final List<Quote> quotes = getQuoteService().readAll();
         
 		model.addAttribute(FORM_MODEL, quote);
 		model.addAttribute(QUOTES_LIST, quotes);
@@ -50,13 +63,20 @@ public class QuotesManagerPortletViewController {
     }
 	
 	@ActionMapping(EDIT_ACTION)
-	public void editQuoteAction() {
+	public final void editQuoteAction() {
 	}
 	
+	/**
+	 * Delete quote from databse.
+	 * 
+	 * @param request Request for get quote id.
+	 * @param model Model for return message.
+	 */
 	@ActionMapping(DELETE_ACTION)
-	public void deleteQuoteAction(ActionRequest request, ActionResponse response, Model model) {
-		int quoteId = Integer.parseInt(request.getParameter(PARAMETER_QUOTE_ID));
-		boolean deleted = getQuoteService().delete(quoteId);
+	public final void deleteQuoteAction(final ActionRequest request, final Model model) {
+		final int quoteId = Integer.parseInt(request.getParameter(PARAMETER_QUOTE_ID));
+		final boolean deleted = getQuoteService().delete(quoteId);
+		
 		if (deleted) {
 			model.addAttribute("successMessage", "Quote was deleted.");
 		} else {
@@ -64,24 +84,43 @@ public class QuotesManagerPortletViewController {
 		}
 	}
 	
+	/**
+	 * Add quote to databse.
+	 * 
+	 * @param quote Quote which will be saved.
+	 * @param result For result of validation.
+	 * @param model Model to show message.
+	 */
 	@ActionMapping(ADD_ACTION)
-	public void addQuoteAction(@ModelAttribute(FORM_MODEL) Quote quote, BindingResult result, Model model, ActionResponse response) {
+	public final void addQuoteAction(final @ModelAttribute(FORM_MODEL) Quote quote, final BindingResult result, final Model model) {
 		quoteValidator.validate(quote, result);
+		
 		if (!result.hasErrors()) {
-			QuoteService quoteService = ServiceProvider.getQuoteService();
+			final QuoteService quoteService = ServiceProvider.getQuoteService();
 			quoteService.create(quote);
 			model.addAttribute("successMessage", "Quote was saved!");
 		}
 	}
 	
+	/**
+	 * Save quote from event.
+	 * 
+	 * @param request Request to get event.
+	 * @param model Model to return message.
+	 */
 	@EventMapping(SAVE_ACTION)
-	public void saveQuoteAction(EventRequest request, Model model) {
-		Quote quote = (Quote) request.getEvent().getValue();
+	public final void saveQuoteAction(final EventRequest request, final Model model) {
+		final Quote quote = (Quote) request.getEvent().getValue();
 		getQuoteService().create(quote);
 		model.addAttribute("successMessage", "Quote was saved!");
 	}
 	
-	private QuoteService getQuoteService() {
+	/**
+	 * Return quote service from backend.
+	 * 
+	 * @return Return quote service.
+	 */
+	private final QuoteService getQuoteService() {
 		return ServiceProvider.getQuoteService();
 	}
 }

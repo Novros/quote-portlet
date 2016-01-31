@@ -6,16 +6,29 @@ import java.util.Random;
 
 import cz.novros.lif.quotes.backend.entity.Quote;
 
+/**
+ * Generator, which generate from his own list.
+ * 
+ * @author Rostislav Novak
+ */
 public class QuoteGenerator implements IQuoteGenerator {
-
-	Random rand;
-	List<Quote> quotes;
 	
+	/** Rand for random numbers. */
+	private Random rand;
+	/** List of quotes from which will be quote selected. */
+	private List<Quote> quotes;
+	
+	/** Basic initialization constructor. */
 	public QuoteGenerator() {
 		rand = new Random();
 		quotes = new ArrayList<Quote>();
 	}
 	
+	/**
+	 * Generate quote from list.
+	 * 
+	 * @return Return quote.
+	 */
 	public final Quote randomQuote() {
 		if(quotes.size() <= 0) {
 			return null;
@@ -24,11 +37,21 @@ public class QuoteGenerator implements IQuoteGenerator {
 		return quotes.get(random);
 	}
 	
-	public final void addQuote(Quote quote) {
+	/**
+	 * Add quote to list.
+	 * 
+	 * @param quote Quote, which will be added.
+	 */
+	public final void addQuote(final Quote quote) {
 		quotes.add(quote);
 	}
 
-	public void setQuotes(List<Quote> quotes) {
+	/**
+	 * Set list of quotes.
+	 * 
+	 * @param quotes List of quotes, which will be stored in this instance.
+	 */
+	public void setQuotes(final List<Quote> quotes) {
 		this.quotes = quotes;	
 	}
 }

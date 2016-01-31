@@ -22,7 +22,7 @@ import cz.novros.lif.quotes.backend.ServiceProvider;
 import cz.novros.lif.quotes.backend.entity.Quote;
 import cz.novros.lif.quotes.portlet.generator.IQuoteGenerator;
 import cz.novros.lif.quotes.portlet.generator.QuoteGenerator;
-import cz.novros.lif.quotes.portlet.generator.QuoteRestClient;
+import cz.novros.lif.quotes.portlet.generator.QuoteRestGenerator;
 
 @Controller
 @RequestMapping("VIEW")
@@ -31,7 +31,7 @@ public class RandomQuotesPortletViewController {
 	protected final Logger LOG = Logger.getLogger(RandomQuotesPortletViewController.class);
 	
 	/** Generator of quotes. */
-	private IQuoteGenerator generator = new QuoteRestClient();
+	private IQuoteGenerator generator = new QuoteRestGenerator();
 
 	/**
 	 * Default rendering of this portlet.
@@ -41,11 +41,11 @@ public class RandomQuotesPortletViewController {
 	 * @return Path of jsp which will be showed.
 	 */
     @RenderMapping
-    public String renderDefault(RenderRequest request, Model model) {
+    public final String renderDefault(final RenderRequest request, final Model model) {
         LOG.debug("Rendering default view.");
         
-        PortletPreferences portletPreferences = request.getPreferences();
-        boolean localQuotes = GetterUtil.getBoolean(portletPreferences.getValue("localQuotes", StringPool.TRUE));
+        final PortletPreferences portletPreferences = request.getPreferences();
+        final boolean localQuotes = GetterUtil.getBoolean(portletPreferences.getValue("localQuotes", StringPool.TRUE));
         
         final Quote quote = generateQuote(localQuotes);
         
@@ -69,7 +69,7 @@ public class RandomQuotesPortletViewController {
      * @param model Model for jsp view.
      */
     @ActionMapping(NEXT_ACTION)
-    public void nextAction(Model model) {
+    public final void nextAction(final Model model) {
     	LOG.debug("Genereting next quote.");
     	final Quote quote = generator.randomQuote();
     	model.addAttribute(PARAM_QUOTE, quote);
@@ -82,14 +82,14 @@ public class RandomQuotesPortletViewController {
      * @param response Response to set event for saving quote in database.
      */
     @ActionMapping(SAVE_ACTION)
-	public void saveQuoteAction(ActionRequest actionRequest, ActionResponse response) {
-    	String text = actionRequest.getParameter(PARAM_QUOTE_TEXT);
-    	String author = actionRequest.getParameter(PARAM_QUOTE_AUTHOR);
-    	Quote quote = new Quote(text, author, actionRequest.getRemoteUser());
+	public final void saveQuoteAction(final ActionRequest actionRequest, final ActionResponse response) {
+    	final String text = actionRequest.getParameter(PARAM_QUOTE_TEXT);
+    	final String author = actionRequest.getParameter(PARAM_QUOTE_AUTHOR);
+    	final Quote quote = new Quote(text, author, actionRequest.getRemoteUser());
     	
     	LOG.info("Saving quote with text:" + quote.getText() + " and author:" + quote.getAuthor() + ".");
     	
-    	QName name = new QName("http://localhost:8080/events", "saveQuote");
+    	final QName name = new QName("http://localhost:8080/events", "saveQuote");
     	response.setEvent(name, quote);
 	}
     
@@ -99,7 +99,7 @@ public class RandomQuotesPortletViewController {
      * @param local True generate quote from local database, False generate from rest.
      * @return Generated quote from generator.
      */
-    private Quote generateQuote(boolean local) {
+    private final Quote generateQuote(final boolean local) {
     	setQuoteGenerator(local);
     	return generator.randomQuote();
     }
@@ -107,14 +107,14 @@ public class RandomQuotesPortletViewController {
     /**
      * Set generator by localQuotes value.
      */
-    private void setQuoteGenerator(boolean local) {
+    private void setQuoteGenerator(final boolean local) {
     	if(local) {
-    		LOG.info("Setting local generator.");
+    		LOG.debug("Setting local generator.");
     		generator = new QuoteGenerator();
     		((QuoteGenerator)generator).setQuotes(ServiceProvider.getQuoteService().readAll());
     	} else {
-    		LOG.info("Setting rest generator.");
-    		generator = new QuoteRestClient();
+    		LOG.debug("Setting rest generator.");
+    		generator = new QuoteRestGenerator();
     	}
     		
     }
