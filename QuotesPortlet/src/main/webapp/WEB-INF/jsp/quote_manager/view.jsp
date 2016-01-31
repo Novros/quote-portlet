@@ -56,10 +56,7 @@
 							<td>${quote.created}</td>
 							<td>${quote.authorOfEntity}</td>
 							<td class="text-center">
-								<portlet:actionURL var="editActionUrl" name="<%=EDIT_ACTION%>">
-									<portlet:param name="<%=PARAMETER_QUOTE_ID%>" value="${quote.id}"/>
-								</portlet:actionURL>
-								<a class="btn btn-warning" href="${editActionUrl }"><spring:message code="quote_manager-edit"/></a>
+								<a class="btn btn-warning edit-button"><spring:message code="quote_manager-edit"/></a>
 			    				<portlet:actionURL var="deleteActionUrl" name="<%=DELETE_ACTION%>">
 									<portlet:param name="<%=PARAMETER_QUOTE_ID%>" value="${quote.id}"/>
 								</portlet:actionURL>
@@ -97,11 +94,16 @@
 		</table>
 
 		<input type="submit" class="btn btn-primary" value="Submit" />
+		<input id="add-form-button-cancel" class="btn btn-default" value="Cancel" />
 	</form:form>
 </div>
 
 <script>
 	$("#add_button").click(function(){
+		var form = $("#add_quote_form");
+		form.toggle();
+	});
+	$("#add-form-button-cancel").click(function(){
 		var form = $("#add_quote_form");
 		form.toggle();
 	});

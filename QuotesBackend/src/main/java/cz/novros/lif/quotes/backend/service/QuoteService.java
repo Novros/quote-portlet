@@ -27,7 +27,7 @@ public class QuoteService {
 	 * 
 	 * @param quote Quote which will be created.
 	 */
-    public final void create(final Quote quote) {
+    public void create(final Quote quote) {
     	quoteDao.create(quote);
     }
     
@@ -38,7 +38,7 @@ public class QuoteService {
 	 * @return Returns quote from database. If not found, returns null.
 	 */
     @Transactional(readOnly=true)
-    public final Quote read(final long id) {
+    public Quote read(final long id) {
         return quoteDao.read(id);
     }
     
@@ -48,7 +48,7 @@ public class QuoteService {
 	 * @return Return list with quotes.
 	 */
 	@Transactional(readOnly=true)
-    public final List<Quote> readAll() {
+    public List<Quote> readAll() {
         return quoteDao.readAll();
     }
 
@@ -57,7 +57,7 @@ public class QuoteService {
 	 * 
 	 * @param quote Quote which will be updated.
 	 */
-	public final void update(final Quote quote) {
+	public void update(final Quote quote) {
 		quoteDao.update(quote);
 	}
 
@@ -66,7 +66,7 @@ public class QuoteService {
 	 * 
 	 * @param quote Quote which will be deleted.
 	 */
-	public final void delete(final Quote quote) {
+	public void delete(final Quote quote) {
 		quoteDao.delete(quote);
 	}
 	
@@ -76,7 +76,7 @@ public class QuoteService {
 	 * @param id Id of quote, which will be deleted.
 	 * @return True if quote was deleted, otherwise false.(quote not found).
 	 */
-	public final boolean delete(final long id) {
+	public boolean delete(final long id) {
 		return quoteDao.delete(id);
 	}
 }

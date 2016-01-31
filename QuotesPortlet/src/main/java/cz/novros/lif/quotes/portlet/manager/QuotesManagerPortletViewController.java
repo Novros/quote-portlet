@@ -62,9 +62,16 @@ public class QuotesManagerPortletViewController {
      	return MAIN_VIEW;
     }
 	
-	@ActionMapping(EDIT_ACTION)
-	public final void editQuoteAction() {
-	}
+	/* @ActionMapping(EDIT_ACTION)
+	public final void editQuoteAction(final @ModelAttribute(FORM_MODEL) Quote quote, final BindingResult result, final Model model) {
+		quoteValidator.validate(quote, result);
+		
+		if (!result.hasErrors()) {
+			final QuoteService quoteService =  getQuoteService();
+			quoteService.update(quote);
+			model.addAttribute("successMessage", "Quote was updated!");
+		}
+	} */
 	
 	/**
 	 * Delete quote from databse.
@@ -96,7 +103,7 @@ public class QuotesManagerPortletViewController {
 		quoteValidator.validate(quote, result);
 		
 		if (!result.hasErrors()) {
-			final QuoteService quoteService = ServiceProvider.getQuoteService();
+			final QuoteService quoteService = getQuoteService();
 			quoteService.create(quote);
 			model.addAttribute("successMessage", "Quote was saved!");
 		}
