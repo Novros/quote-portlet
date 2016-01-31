@@ -5,19 +5,7 @@
 
 <portlet:defineObjects />
 
-<div id="${ns}Random" class="container-fluid">
-
-	<c:if test="${successMessage != null}">
-		<div class="alert alert-success">
-			${successMessage}
-		</div>
-	</c:if>
-
-	<c:if test="${errorMessage != null}">
-		<div class="alert alert-danger">
-				${errorMessage}
-		</div>
-	</c:if>
+<div id="${ns}Random" class="portlet-wrapper container-fluid">
 
 	<c:choose>
 	    <c:when test="${GeneratorError == null}">
@@ -37,7 +25,7 @@
 	
     <div class="buttons row text-right">
     	<portlet:actionURL var="nextActionUrl" name="<%=NEXT_ACTION%>"/>
-	    <a class="btn btn-default" href="${nextActionUrl}"><spring:message code="random_quote-next"/> </a>
+	    <a class="btn btn-warning" href="${nextActionUrl}"><spring:message code="random_quote-next"/> </a>
 	    <portlet:actionURL var="saveActionUrl" name="<%=SAVE_ACTION%>">
 	    	<portlet:param name="<%=PARAM_QUOTE_TEXT%>" value="${quote.text}" />
 	    	<portlet:param name="<%=PARAM_QUOTE_AUTHOR%>" value="${quote.author}" />

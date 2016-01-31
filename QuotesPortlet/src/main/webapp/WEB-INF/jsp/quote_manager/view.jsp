@@ -5,7 +5,7 @@
 
 <portlet:defineObjects />
 
-<div id="${ns}Manager class="container-fluid">
+<div id="${ns}Manager" class="container-fluid portlet-wrapper">
 
 	<c:if test="${successMessage != null}">
 		<div class="alert alert-success text-center">
@@ -29,34 +29,21 @@
 			<table class="table table-striped table-bordered table-hover">
 				<thead>
 					<tr>
-						<th>id</th>
-						<th>Quote</th>
-						<th>Author</th>
-						<th>Created</th>
-						<th>Author of entity</th>
-						<th>Actions</th>
+						<th><spring:message code="quote_manager-table_quote"/></th>
+						<th><spring:message code="quote_manager-table_author"/></th>
+						<th><spring:message code="quote_manager-table_created"/></th>
+						<th><spring:message code="quote_manager-table_entity_author"/></th>
+						<th><spring:message code="quote_manager-table_actions"/></th>
 					</tr>
 				</thead>
-				<tfoot>
-					<tr>
-						<th>id</th>
-						<th>Quote</th>
-						<th>Author</th>
-						<th>Created</th>
-						<th>Author of entity</th>
-						<th>Actions</th>
-					</tr>
-				</tfoot>
 				<tbody>
 					<c:forEach var="quote" items="${quotes}" varStatus="iterator">
 						<tr>
-							<td>${quote.id}</td>
 							<td>${quote.text}</td>
 							<td>${quote.author}</td>
 							<td>${quote.created}</td>
 							<td>${quote.authorOfEntity}</td>
 							<td class="text-center">
-								<a class="btn btn-warning edit-button"><spring:message code="quote_manager-edit"/></a>
 			    				<portlet:actionURL var="deleteActionUrl" name="<%=DELETE_ACTION%>">
 									<portlet:param name="<%=PARAMETER_QUOTE_ID%>" value="${quote.id}"/>
 								</portlet:actionURL>
@@ -79,22 +66,26 @@
 		<table width="100%">
 			<tr>
 				<td>
-					<form:label path="text">Text</form:label>
+					<form:label path="text"><spring:message code="quote_manager-form_quote"/></form:label>
 					<form:input path="text" cssStyle="width: 95%;"/>
 					<form:errors path="text" cssStyle="width: 88%;" cssClass="alert alert-danger"/>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<form:label path="author">Author</form:label>
+					<form:label path="author"><spring:message code="quote_manager-from_author"/></form:label>
 					<form:input path="author" cssStyle="width: 95%;"/>
 					<form:errors path="author" cssStyle="width: 88%;" cssClass="alert alert-danger"/>
 				</td>
 			</tr>
+			<tr>
+				<td>
+					<input type="submit" class="btn btn-primary" value="<spring:message code="quote_manager-form_add"/>" >
+					<input type="reset" id="add-form-button-cancel" class="btn btn-warning" value="<spring:message code="quote_manager-from_cancel"/>"/>
+				</td>
+			</tr>
 		</table>
-
-		<input type="submit" class="btn btn-primary" value="Submit" />
-		<input id="add-form-button-cancel" class="btn btn-default" value="Cancel" />
+		
 	</form:form>
 </div>
 
@@ -102,9 +93,11 @@
 	$("#add_button").click(function(){
 		var form = $("#add_quote_form");
 		form.toggle();
+		$("#add_button").hide();
 	});
 	$("#add-form-button-cancel").click(function(){
 		var form = $("#add_quote_form");
 		form.toggle();
+		$("#add_button").show();
 	});
 </script>
