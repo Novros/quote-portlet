@@ -1,8 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 <%@include file="../init.jspf"%>
-
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 <%@page import="static cz.novros.lif.quotes.portlet.random.RandomQuotesConstants.*" %>
+
+<portlet:defineObjects />
 
 <div id="${ns}Random" class="container-fluid">
 
@@ -35,7 +36,12 @@
 	</c:choose>
 	
     <div class="buttons row text-right">
-	    <a class="btn btn-default" href="<portlet:renderURL/>"><spring:message code="random_quote-next"/> </a>
-	    <a class="btn btn-success" href="<portlet:renderURL/>"><spring:message code="random_quote-save"/> </a>
+    	<portlet:actionURL var="nextActionUrl" name="<%=NEXT_ACTION%>"/>
+	    <a class="btn btn-default" href="${nextActionUrl}"><spring:message code="random_quote-next"/> </a>
+	    <portlet:actionURL var="saveActionUrl" name="<%=SAVE_ACTION%>">
+	    	<portlet:param name="<%=PARAM_QUOTE_TEXT%>" value="${quote.text}" />
+	    	<portlet:param name="<%=PARAM_QUOTE_AUTHOR%>" value="${quote.author}" />
+	    </portlet:actionURL>
+	    <a class="btn btn-success" href="${saveActionUrl}"><spring:message code="random_quote-save"/> </a>
     </div>
 </div>

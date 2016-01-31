@@ -1,18 +1,15 @@
 package cz.novros.lif.quotes.portlet.random;
 
-import static cz.novros.lif.quotes.portlet.random.RandomQuotesConstants.FORM_MODEL;
-import static cz.novros.lif.quotes.portlet.random.RandomQuotesConstants.MAIN_VIEW;
-import static cz.novros.lif.quotes.portlet.random.RandomQuotesConstants.NEXT_ACTION;
-import static cz.novros.lif.quotes.portlet.random.RandomQuotesConstants.PARAM_QUOTE;
-import static cz.novros.lif.quotes.portlet.random.RandomQuotesConstants.SAVE_ACTION;
+import static cz.novros.lif.quotes.portlet.random.RandomQuotesConstants.*;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.RenderRequest;
+import javax.xml.namespace.QName;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
@@ -44,31 +41,21 @@ public class RandomQuotesPortletViewController {
         
         return MAIN_VIEW;
     }
-
+    
     @ActionMapping(NEXT_ACTION)
-    public void nextAction(RenderRequest request, Model model) {
-        LOG.debug("Activating next action.");
-        
-        final Quote quote = generator.randomQuote();
-        if(quote == null) {
-        	model.addAttribute("danger", "GeneratorError");
-        } else {
-        	String userId = request.getRemoteUser();
-            quote.setAuthorOfEntity(userId);
-        }
-        
-        model.addAttribute(PARAM_QUOTE, quote);
+    public void nextAction(ActionRequest actionRequest, ActionResponse response, Model model) {
+    	final Quote quote = generator.randomQuote();
+    	model.addAttribute(PARAM_QUOTE, quote);
     }
     
     @ActionMapping(SAVE_ACTION)
-	public void saveQuoteAction(@ModelAttribute(FORM_MODEL) Quote quote, BindingResult result, Model model) {
+	public void saveQuoteAction(ActionRequest actionRequest, ActionResponse response) {
+    	String text = actionRequest.getParameter(PARAM_QUOTE_TEXT);
+    	String author = actionRequest.getParameter(PARAM_QUOTE_AUTHOR);
+    	Quote quote = new Quote(text, author, actionRequest.getRemoteUser());
     	LOG.info("Saving quote with text:" + quote.getText() + " and author:" + quote.getAuthor() + ".");
     	
-    	/*quoteValidator.validate(quote,result);
-		if (!result.hasErrors()) {
-			QuoteService quoteService = ServiceProvider.getQuoteService();
-			quoteService.create(quote);
-			model.addAttribute("successMessage", "Quote was saved!");
-		}*/
+    	QName name = new QName("http://localhost:8080/events", "saveQuote");
+    	response.setEvent(name, quote);
 	}
 }

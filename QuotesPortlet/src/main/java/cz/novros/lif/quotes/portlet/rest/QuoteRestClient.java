@@ -24,13 +24,13 @@ public class QuoteRestClient implements IQuoteGenerator {
 		WebResource webResource = client.resource(ENDPOINT + RAND_PARAM);
 		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 
+		String quoteString = "";
 		if (response.getStatus() != 200) {
 			System.err.println("Failed : HTTP error code : " + response.getStatus());
-			throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
+		} else {
+			quoteString = response.getEntity(String.class);
 		}
-		
-		String quoteString = response.getEntity(String.class);
-		
+
 		/** 
 		 * TODO Rewrite: Use rest entity to parse json. (Jackson)
 		 */

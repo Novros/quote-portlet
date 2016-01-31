@@ -27,6 +27,7 @@ public class QuoteService {
     }
 
     public void create(Quote quote) {
+    	quoteDao.create(quote);
     }
 
 	public void update(Quote quote) {
@@ -35,5 +36,9 @@ public class QuoteService {
 
 	public void delete(Quote quote) {
 		quoteDao.delete(quote);
+	}
+	
+	public boolean delete(long id) {
+		return quoteDao.delete(id);
 	}
 }

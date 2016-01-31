@@ -1,5 +1,6 @@
 package cz.novros.lif.quotes.backend.entity;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -15,12 +16,17 @@ import javax.persistence.Id;
  * @author Rostislav Novak
  */
 @Entity
-public class Quote {
+public class Quote implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 621194458049273156L;
+
 	/** Id for database. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int ID;
+	private long id;
 	
 	/** Text of quote. */
 	private String text;
@@ -30,6 +36,13 @@ public class Quote {
 	private String authorOfEntity;
 	/** Date, when was entity created. */
 	private String created;
+	
+	/** Empty constructor for database. */
+	public Quote() {
+		final Calendar cal = Calendar.getInstance();
+        final SimpleDateFormat sdf = new SimpleDateFormat("d.M.Y");
+        created = sdf.format(cal.getTime());
+	}
 	
 	/**
 	 * Create instance of quote with parameters.
@@ -48,12 +61,12 @@ public class Quote {
         created = sdf.format(cal.getTime());
 	}
 
-	public int getID() {
-		return ID;
+	public long getId() {
+		return id;
 	}
 
-	public void setID(int iD) {
-		ID = iD;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	/**

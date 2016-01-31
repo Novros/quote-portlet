@@ -15,5 +15,6 @@
         <requires-namespaced-parameters>false</requires-namespaced-parameters>
         <header-portlet-css>/css/main.css</header-portlet-css>
         <header-portlet-javascript>/js/main.js</header-portlet-javascript>
+        <header-portlet-javascript>http://code.jquery.com/jquery-1.4.2.min.js</header-portlet-javascript>
     </portlet>
 </liferay-portlet-app>

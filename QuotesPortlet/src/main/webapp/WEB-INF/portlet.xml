@@ -15,11 +15,15 @@
         </init-param>
         <supports>
             <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
         </supports>
         <supported-locale>en</supported-locale>
         <supported-locale>cs</supported-locale>
         <resource-bundle>content.random-quote-portlet</resource-bundle>
+        <supported-publishing-event>
+            <qname xmlns:x="http://localhost:8080/events">
+            	x:saveQuote
+            </qname>
+        </supported-publishing-event>
     </portlet>
     
    <portlet>
@@ -31,11 +35,23 @@
         </init-param>
         <supports>
             <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
         </supports>
         <supported-locale>en</supported-locale>
         <supported-locale>cs</supported-locale>
         <resource-bundle>content.manager-quote-portlet</resource-bundle>
+        <supported-processing-event>
+        	<qname xmlns:x="http://localhost:8080/events">
+            	x:saveQuote
+            </qname>
+        </supported-processing-event>
     </portlet>
+    
+    <default-namespace>http://localhost:8080/events</default-namespace>
+    <event-definition>
+        <qname xmlns:x="http://localhost:8080/events">
+            	x:saveQuote
+        </qname>
+        <value-type>cz.novros.lif.backend.entity.Quote</value-type>
+    </event-definition>
 
 </portlet-app>

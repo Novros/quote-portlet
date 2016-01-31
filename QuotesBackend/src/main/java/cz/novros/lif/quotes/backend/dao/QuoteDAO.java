@@ -19,6 +19,7 @@ public class QuoteDAO {
 	 
 	 public void create(Quote quote) {
 		 entityManager.persist(quote);
+		 entityManager.flush();
 	 }
 	 
 	 public Quote read(long id) {
@@ -30,15 +31,26 @@ public class QuoteDAO {
 	 }
 	 
 	 public List<Quote> readAll() {
-		 TypedQuery<Quote> query = entityManager.createQuery("SELECT e FROM " + Quote.class.getSimpleName() + " e", Quote.class);
+		 String readAllQuery = "SELECT e FROM " + Quote.class.getSimpleName() + " e";
+		 TypedQuery<Quote> query = entityManager.createQuery(readAllQuery, Quote.class);
 	     return query.getResultList();
 	 }
 	 
 	 public void update(Quote quote) {
 		 entityManager.merge(quote);
+		 entityManager.flush();
 	 }
 	 
 	 public void delete(Quote quote) {
 		 entityManager.remove(quote);
+	 }
+	 
+	 public boolean delete(long id) {
+		 Quote quote = read(id);
+		 if(quote == null) {
+			 return false;
+		 }
+		 delete(quote);
+		 return true;
 	 }
 }
