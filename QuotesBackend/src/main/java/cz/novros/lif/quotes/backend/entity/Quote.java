@@ -19,7 +19,7 @@ import javax.persistence.Id;
 public class Quote implements Serializable {
 	
 	/**
-	 * 
+	 * UID for Serializable.
 	 */
 	private static final long serialVersionUID = 621194458049273156L;
 
@@ -61,11 +61,11 @@ public class Quote implements Serializable {
         created = sdf.format(cal.getTime());
 	}
 
-	public long getId() {
+	public final long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public final void setId(final long id) {
 		this.id = id;
 	}
 
